@@ -1,9 +1,9 @@
-import TodosList from './TodosList'
+import ChatList from './ChatList'
 
 export class RootStore {
-    todosList: TodosList
+    chatList: ChatList
     constructor() {
-        this.todosList = new TodosList(this)
+        this.chatList = new ChatList(this)
     }
 }
 new RootStore()

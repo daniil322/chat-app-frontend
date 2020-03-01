@@ -1,0 +1,8 @@
+@import "~antd/dist/antd.css";
+@import "./basics/helpers.scss";
+@import "./setup/mixins";
+@import "./pages/ChatApp.scss";
+
+body {
+  height: 0;
+}
