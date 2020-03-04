@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useStore } from '../store/useStore';
+import { useStore } from '../store/UseStore';
 import { useObserver } from 'mobx-react-lite'
 
 import ChatForm from '../components/ChatForm'
@@ -41,7 +41,9 @@ export default function TodosPage() {
 
     function topicForm() {
         return (<div className='flex coulmn space-between container chat-container'>
-            <h3 className='header'>Add Topic</h3>
+            <div className='flex header chat-header-container'>
+                <h3 >Add Topic</h3>
+            </div>
             <ChatForm topicAddMode={topicAddMode} sendMsg={addTopic} />
         </div>)
     }
@@ -70,10 +72,8 @@ export default function TodosPage() {
                     </div>
 
                     {topicAddMode ?
-
                         topicForm() :
                         currChat._id ?
-
                             <div className='flex coulmn container chat-container'>
                                 <div className='flex header chat-header-container'>
                                     <Avatar src={currChat.imgUrl} />

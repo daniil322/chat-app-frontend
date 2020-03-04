@@ -2,9 +2,6 @@ import React from 'react'
 import ChatItem from '../store/ChatItem'
 import { Avatar } from 'antd'
 
-
-
-
 interface Props {
     chat: ChatItem
     setCurrTopic: Function
@@ -19,5 +16,4 @@ export default function ChatTopicPreview(props: Props) {
             <h4 className='center-self'>{topic}</h4>
         </div>
     )
-
 }

@@ -5,11 +5,10 @@ import chatService from '../services/chatService'
 import ChatItem from './ChatItem'
 import SocketService from '../services/socketService'
 
-
 export default class ChatList {
 
     @observable.shallow chats: ChatItem[] = []
-    @observable currChat: ChatItem = new ChatItem('', [], 0, '')
+    @observable currChat: ChatItem = new ChatItem({ topic: '', imgUrl: '', _id: Date.now(), msgs: [] })
     rootStore: RootStore
     constructor(rootStore: RootStore) {
         this.rootStore = rootStore
@@ -17,9 +16,8 @@ export default class ChatList {
 
     @action
     addTopic = async (topic: { txt: string, imgUrl: string }) => {
-        const newTopic = new ChatItem(topic.txt, [], Date.now(), topic.imgUrl)
-        console.log(newTopic)
-        console.log(topic)
+        const newTopic = new ChatItem({ topic: topic.txt, imgUrl: topic.imgUrl, _id: Date.now(), msgs: [] })
+        this.chats.push(newTopic)
         const chat = await chatService.addTopic(newTopic)
         SocketService.emit('new topic', chat)
         this.currChat = newTopic
@@ -30,8 +28,9 @@ export default class ChatList {
         SocketService.on('new topic', this.getTopic)
     }
 
+    @action
     getTopic = (newTopic: ChatItem) => {
-        this.chats.push(new ChatItem(newTopic.topic, newTopic.msgs, newTopic._id, newTopic.imgUrl))
+        this.chats.push(new ChatItem(newTopic))
     }
 
     @action
@@ -44,11 +43,10 @@ export default class ChatList {
         }
     }
 
-    @action
     getChats = async () => {
         const chats: ChatItem[] = await chatService.get()
         chats.forEach(chat => {
-            this.chats.push(new ChatItem(chat.topic, chat.msgs, chat._id, chat.imgUrl))
+            this.getTopic(chat)
         });
     }
 }

@@ -1,7 +1,8 @@
 
 import React, { useEffect, useRef } from 'react'
-import { useStore } from '../store/useStore';
+import { useStore } from '../store/UseStore';
 import { useObserver } from 'mobx-react-lite'
+
 import ChatPreview from './ChatPreview';
 import SocketService from '../services/socketService';
 import ChatMsg from '../interfaces/ChatMsg';
@@ -10,8 +11,7 @@ interface Props {
     userName: string
 }
 
-
-export default function ChatTopicsList(props: Props) {
+export default function ChatTopicsList({ userName }: Props) {
 
     const rootStore = useStore();
     const { chatList } = rootStore
@@ -21,7 +21,6 @@ export default function ChatTopicsList(props: Props) {
         await chatList.currChat.getMsg(msg)
         chatBottom.current?.scrollIntoView({ behavior: "smooth" })
     }
-
 
     useEffect(() => {
         chatList.currChat.getMsgs()
@@ -36,12 +35,10 @@ export default function ChatTopicsList(props: Props) {
     return useObserver(() => (
         <div className='msg-container'>
             {chatList.currChat.msgs.map((chat, idx) => {
-                return <ChatPreview userName={props.userName} key={idx} chat={chat} />
+                return <ChatPreview currUserName={userName} key={idx} chat={chat} />
             })}
             <div ref={chatBottom} />
         </div>
     )
     )
-
-
 }

@@ -4,24 +4,26 @@ import chatService from '../services/chatService'
 import ChatMsg from '../interfaces/ChatMsg'
 import SocketService from "../services/socketService"
 
+interface ChatData {
+    topic: string,
+    msgs: ChatMsg[],
+    _id: number,
+    imgUrl: string
+}
 
 export default class ChatItem {
+    topic: string = ''
+    @observable msgs: ChatMsg[] = []
+    _id = Date.now()
+    imgUrl = ''
 
-    topic: string
-    @observable msgs: ChatMsg[]
-    _id: number
-    imgUrl: string
-
-    constructor(topic: string, msgs: ChatMsg[], _id: number = Date.now(), imgUrl: string) {
-        this.topic = topic
-        this.msgs = msgs
-        this._id = _id
-        this.imgUrl = imgUrl
+    constructor(chatData: ChatData) {
+        Object.assign(this, chatData)
     }
 
     @action
     addMsg = async (newMsg: ChatMsg) => {
-        chatService.update(this._id, newMsg)
+        await chatService.update(this._id, newMsg)
         SocketService.emit('chat newMsg', { topic: this.topic, msg: newMsg })
     }
 
@@ -38,13 +40,14 @@ export default class ChatItem {
         this.msgs.push(newMsg)
     }
 
-    @action
     getMsgs = async () => {
         const newChat = await chatService.getById(this._id)
         if (!newChat.msgs) {
             return
         }
-        this.msgs = newChat.msgs
+        this.msgs.forEach((msg) => {
+            this.getMsg(msg)
+        })
     }
 
 }

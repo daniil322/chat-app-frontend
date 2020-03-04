@@ -1,7 +1,7 @@
 
 import React, { useEffect } from 'react'
 import ChatTopicPreview from './ChatTopicPreview'
-import { useStore } from '../store/useStore';
+import { useStore } from '../store/UseStore';
 import { useObserver } from 'mobx-react-lite'
 
 interface Props {
