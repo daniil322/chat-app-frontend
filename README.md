@@ -1,6 +1,6 @@
 technologies: 
-front-end: mobx ,socketio-client ,react sass ,axios
+front-end: mobx ,socket.io-client ,react ,sass ,axios
 
-back-end : node.js ,sockeio ,redis ,mongodb ,express
+back-end : node.js ,socket.io ,redis ,mongodb ,express
 
 https://daniils-chat-app.herokuapp.com/
