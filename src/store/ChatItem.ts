@@ -45,11 +45,8 @@ export default class ChatItem {
         if (!newChat.msgs) {
             return
         }
-        this.msgs.forEach((msg) => {
-            this.getMsg(msg)
-        })
+        this.msgs=newChat.msgs
     }
-
 }
 
 

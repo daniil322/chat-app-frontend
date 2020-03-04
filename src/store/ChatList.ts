@@ -8,7 +8,7 @@ import SocketService from '../services/socketService'
 export default class ChatList {
 
     @observable.shallow chats: ChatItem[] = []
-    @observable currChat: ChatItem = new ChatItem({ topic: '', imgUrl: '', _id: Date.now(), msgs: [] })
+    @observable currChat: ChatItem = new ChatItem({ topic: '', imgUrl: '', _id: 0, msgs: [] })
     rootStore: RootStore
     constructor(rootStore: RootStore) {
         this.rootStore = rootStore
